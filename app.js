@@ -13,11 +13,13 @@ const articles = require("./modals/articles");
 
 // get articles
 app.get("/api/v1/articles", async (req, res) => {
-  const data = await articles.find().limit(10);
-
-  res.status(200).json(data);
+  try {
+    const data = await articles.find().limit(1000);
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({});
+  }
 });
-
 
 const port = process.env.PORT || 5000;
 
@@ -27,7 +29,7 @@ const start = async () => {
 
     console.log("database connection made");
 
-    app.listen(port , () => {
+    app.listen(port, () => {
       console.log(`server is listening on port ${port}`);
     });
   } catch (error) {
