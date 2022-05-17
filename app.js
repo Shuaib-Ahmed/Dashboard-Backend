@@ -14,7 +14,17 @@ const articles = require("./modals/articles");
 // get articles
 app.get("/api/v1/articles", async (req, res) => {
   try {
-    const data = await articles.find().limit(1000);
+    const data = await articles.find();
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(400).json({});
+  }
+});
+
+// get articles By Filters
+app.get("/api/v1/articles/query", async (req, res) => {
+  try {
+    const data = await articles.find({ ...req.query });
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({});
